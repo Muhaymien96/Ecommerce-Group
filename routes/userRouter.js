@@ -27,8 +27,13 @@ app.get("/", async (req, res) => {
 });
 
 // GET one user
-app.get("/:id", getUser, (req, res, next) => {
-  res.send(res.user);
+app.get("/single-user/", auth, (req, res, next) => {
+  try {
+    const user = await Users.findById(req.user._id)
+  res.status(201).json(user)
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
 // LOGIN user with email + password
@@ -219,7 +224,7 @@ app.put("/:id/cart", [auth, getProduct], async (req, res, next) => {
     user.cart.qty = product.qty;
     user.markModified("cart")
     const updatedUser = await user.save();
-    console.log(updatedUser)
+   
       res.status(201).json(updatedUser.cart);
     } catch (error) {
       res.status(500).json(console.log(error));
