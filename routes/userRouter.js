@@ -27,7 +27,7 @@ app.get("/", async (req, res) => {
 });
 
 // GET one user
-app.get("/single-user/", auth, (req, res, next) => {
+app.get("/single-user/", auth, async(req, res, next) => {
   try {
     const user = await Users.findById(req.user._id)
   res.status(201).json(user)
