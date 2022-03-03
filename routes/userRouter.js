@@ -174,7 +174,6 @@ app.get('/cart', auth, async (req, res, next) => {
 //Add product to cart
 app.post('/:id/cart', [auth, getProduct], async (req, res, next) => {
   const user = await Users.findById(req.user._id)
-  console.log(user)
   let product_id = res.product._id
   let title = res.product.title
   let category = res.product.category
@@ -195,7 +194,6 @@ app.post('/:id/cart', [auth, getProduct], async (req, res, next) => {
     price
   })
   try {
-    console.log(Array.isArray(req.user.cart))
     user.cart.push({
       product_id,
       title,
