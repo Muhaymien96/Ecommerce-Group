@@ -160,15 +160,15 @@ app.delete("/:id", getUser, async (req, res, next) => {
 
 //CART
 // Get all products in the cart
-app.get('/:id/cart', auth, async (req, res, next) => {
+app.get('/cart', auth, async (req, res, next) => {
   try {
-    res.send(req.user.cart)
+    const user = await Users.findById(req.user._id)
+  res.status(201).json(user.cart)
   } catch (error) {
     res.status(500).send({
       message: error.message
     });
   }
-
 })
 
 //Add product to cart

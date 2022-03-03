@@ -73,10 +73,10 @@ app.put("/:id", [auth, getProduct], async (req, res, next) => {
 
 // DELETE a product
 app.delete("/:id", [auth, getProduct], async (req, res, next) => {
-  // if (req.user._id !== req.product.created_by)
-    // res
-    //   .status(400)
-    //   .json({ message: "You do not have the permission to delete this product" });
+  if (req.user._id !== req.product.created_by)
+    res
+      .status(400)
+      .json({ message: "You do not have the permission to delete this product" });
   try {
     await res.product.remove();
     res.status(201).json({ message: "Deleted product" });
